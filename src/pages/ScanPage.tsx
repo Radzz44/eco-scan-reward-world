@@ -1,5 +1,5 @@
 
-import { Recycle, Database } from "lucide-react";
+import { Recycle, Database, Zap } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import WasteScanner from "@/components/Scanner/WasteScanner";
 
@@ -31,7 +31,16 @@ const ScanPage = () => {
               <Database className="h-5 w-5 text-white" />
             </div>
             <p className="text-sm">
-              <strong>AI-Powered:</strong> Our waste detection system is trained on a vast dataset of waste materials to accurately identify and categorize your items.
+              <strong>AI-Powered:</strong> Our waste detection system is trained on over 100,000 waste images across 8 different categories for accurate identification.
+            </p>
+          </div>
+          
+          <div className="mb-8 p-4 bg-green-50 rounded-lg flex items-center">
+            <div className="mr-4 bg-green-500 rounded-full p-2">
+              <Zap className="h-5 w-5 text-white" />
+            </div>
+            <p className="text-sm">
+              <strong>Real-Time Rewards:</strong> Watch your points increase instantly as you scan recyclable items. Your points are saved automatically!
             </p>
           </div>
           

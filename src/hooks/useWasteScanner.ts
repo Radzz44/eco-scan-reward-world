@@ -16,7 +16,17 @@ export const useWasteScanner = () => {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
   const [progress, setProgress] = useState(0);
+  const [totalPoints, setTotalPoints] = useState(() => {
+    // Initialize from localStorage if available
+    const saved = localStorage.getItem('eco-total-points');
+    return saved ? parseInt(saved, 10) : 0;
+  });
   const { toast } = useToast();
+
+  // Save points to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('eco-total-points', totalPoints.toString());
+  }, [totalPoints]);
 
   useEffect(() => {
     const loadModel = async () => {
@@ -81,6 +91,10 @@ export const useWasteScanner = () => {
       setProgress(100);
       setScanResult(result);
       
+      // Update total points
+      setTotalPoints(prevPoints => prevPoints + result.pointsAwarded);
+      
+      // Show toast notification
       toast({
         title: "Scan Complete!",
         description: `You've earned ${result.pointsAwarded} points!`,
@@ -110,6 +124,7 @@ export const useWasteScanner = () => {
     uploadedImage,
     scanResult,
     progress,
+    totalPoints,
     handleFileSelect,
     analyzeWaste,
     resetScan

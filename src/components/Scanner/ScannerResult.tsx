@@ -1,7 +1,8 @@
 
-import { Check, AlertTriangle } from "lucide-react";
+import { Check, AlertTriangle, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useState, useEffect } from "react";
 
 interface ScanResult {
   wasteType: string;
@@ -16,13 +17,37 @@ interface ScannerResultProps {
 }
 
 const ScannerResult = ({ result, onNewScan }: ScannerResultProps) => {
+  const [animatedPoints, setAnimatedPoints] = useState(0);
+  const [showAnimation, setShowAnimation] = useState(true);
+  
+  useEffect(() => {
+    // Animate points counting up
+    if (animatedPoints < result.pointsAwarded) {
+      const timer = setTimeout(() => {
+        setAnimatedPoints(prev => Math.min(prev + Math.ceil(result.pointsAwarded / 20), result.pointsAwarded));
+      }, 50);
+      return () => clearTimeout(timer);
+    } else {
+      // Once animation completes, show checkmark briefly then hide animation
+      const timer = setTimeout(() => {
+        setShowAnimation(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [animatedPoints, result.pointsAwarded]);
+
   return (
     <div className="w-full space-y-4 animate-fade-in">
       <div className="bg-muted p-4 rounded-lg">
         <div className="flex justify-between items-center mb-2">
           <div className="font-medium text-lg">{result.wasteType}</div>
-          <div className="bg-eco-accent text-white px-3 py-1 rounded-full text-sm font-medium">
-            +{result.pointsAwarded} points
+          <div className="flex items-center">
+            <div className="bg-eco-accent text-white px-3 py-1 rounded-full text-sm font-medium">
+              +{showAnimation ? animatedPoints : result.pointsAwarded} points
+            </div>
+            {showAnimation && animatedPoints === result.pointsAwarded && (
+              <Check className="h-5 w-5 ml-2 text-eco-primary animate-pulse" />
+            )}
           </div>
         </div>
         
@@ -48,6 +73,16 @@ const ScannerResult = ({ result, onNewScan }: ScannerResultProps) => {
             )}
             <span>{result.message}</span>
           </div>
+
+          {showAnimation && (
+            <div className="bg-eco-light/50 p-2 rounded-md mt-2 flex items-center justify-between">
+              <div className="flex items-center text-sm">
+                <TrendingUp className="h-4 w-4 text-eco-primary mr-2" />
+                <span>Updating your total points...</span>
+              </div>
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-eco-primary border-t-transparent"></div>
+            </div>
+          )}
         </div>
       </div>
       
