@@ -1,5 +1,5 @@
 
-import { Recycle } from "lucide-react";
+import { Recycle, Database } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import WasteScanner from "@/components/Scanner/WasteScanner";
 
@@ -23,6 +23,15 @@ const ScanPage = () => {
             </div>
             <p className="text-sm">
               <strong>Tip:</strong> Make sure the waste item is clearly visible and well-lit for the best scan results.
+            </p>
+          </div>
+          
+          <div className="mb-8 p-4 bg-blue-50 rounded-lg flex items-center">
+            <div className="mr-4 bg-blue-500 rounded-full p-2">
+              <Database className="h-5 w-5 text-white" />
+            </div>
+            <p className="text-sm">
+              <strong>AI-Powered:</strong> Our waste detection system is trained on a vast dataset of waste materials to accurately identify and categorize your items.
             </p>
           </div>
           
