@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Recycle, Award, Store, MapPin } from "lucide-react";
-import logo from "@/assets/logo.svg";
+import ProfileMenu from "@/components/profile/ProfileMenu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +30,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-2">
+          <div className="hidden md:flex items-center space-x-2">
             {navItems.map((item) => (
               <Button
                 key={item.name}
@@ -44,15 +44,20 @@ const Navbar = () => {
                 </Link>
               </Button>
             ))}
+            <div className="ml-2">
+              <ProfileMenu />
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
+            <ProfileMenu />
             <Button 
               variant="ghost" 
               size="icon" 
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
+              className="ml-2"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </Button>

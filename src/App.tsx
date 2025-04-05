@@ -8,6 +8,7 @@ import ScanPage from "./pages/ScanPage";
 import RewardsPage from "./pages/RewardsPage";
 import PartnersPage from "./pages/PartnersPage";
 import CollectionPage from "./pages/CollectionPage";
+import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,8 @@ const App = () => (
           <Route path="/rewards" element={<RewardsPage />} />
           <Route path="/partners" element={<PartnersPage />} />
           <Route path="/collection" element={<CollectionPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:section" element={<ProfilePage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
