@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Search, Filter, Store } from "lucide-react";
 import Layout from "@/components/layout/Layout";
@@ -23,63 +22,37 @@ const PartnersPage = () => {
   const [selectedPartnerId, setSelectedPartnerId] = useState<number | null>(null);
   const { toast } = useToast();
 
-  // Mock data
-  const categories = ["Restaurants", "Fashion", "Electronics", "Grocery", "Entertainment"];
+  // Categories
+  const categories = ["Cafés", "Restaurants", "Fast Food"];
   
+  // Custom partner shops
   const partners = [
     {
       id: 1,
-      name: "Green Café",
-      image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      discount: "50% Off",
-      pointsRequired: 500,
-      location: "Downtown",
-      category: "Restaurants"
+      name: "Duniyadari Chai",
+      image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      discount: "Free Tea",
+      pointsRequired: 250,
+      location: "Wagholi, Pune",
+      category: "Cafés"
     },
     {
       id: 2,
-      name: "Eco Apparel",
-      image: "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      discount: "Buy 1 Get 1 Free",
-      pointsRequired: 800,
-      location: "Mall Central",
-      category: "Fashion"
+      name: "Crush Café",
+      image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      discount: "1+1 Burger Offer",
+      pointsRequired: 750,
+      location: "Near G H Raisoni College, Wagholi, Pune",
+      category: "Cafés"
     },
     {
       id: 3,
-      name: "Tech Planet",
-      image: "https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      discount: "20% Off",
-      pointsRequired: 1200,
-      location: "Tech District",
-      category: "Electronics"
-    },
-    {
-      id: 4,
-      name: "Fresh Market",
-      image: "https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      discount: "15% Off",
-      pointsRequired: 400,
-      location: "Westside",
-      category: "Grocery"
-    },
-    {
-      id: 5,
-      name: "Cinema World",
-      image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      discount: "Free Popcorn",
-      pointsRequired: 600,
-      location: "Entertainment Zone",
-      category: "Entertainment"
-    },
-    {
-      id: 6,
-      name: "Organic Bistro",
-      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      discount: "30% Off",
-      pointsRequired: 700,
-      location: "Riverside",
-      category: "Restaurants"
+      name: "Crazy Burger",
+      image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      discount: "50% Off on Burgers",
+      pointsRequired: 500,
+      location: "Wagholi, Pune",
+      category: "Fast Food"
     }
   ];
 
