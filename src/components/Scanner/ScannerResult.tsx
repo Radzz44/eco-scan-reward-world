@@ -1,5 +1,5 @@
 
-import { Check, AlertTriangle, TrendingUp } from "lucide-react";
+import { Check, AlertTriangle, TrendingUp, HeartHandshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useState, useEffect } from "react";
@@ -9,6 +9,7 @@ interface ScanResult {
   reusability: number;
   pointsAwarded: number;
   message: string;
+  donationSuggestion?: boolean;
 }
 
 interface ScannerResultProps {
@@ -73,6 +74,26 @@ const ScannerResult = ({ result, onNewScan }: ScannerResultProps) => {
             )}
             <span>{result.message}</span>
           </div>
+
+          {/* Donation suggestion for food items */}
+          {result.donationSuggestion && (
+            <div className="bg-orange-50 p-3 rounded-md mt-2 border border-orange-200">
+              <div className="flex items-center">
+                <HeartHandshake className="h-5 w-5 text-orange-500 mr-2" />
+                <span className="text-sm font-medium text-orange-700">Donation Opportunity</span>
+              </div>
+              <p className="text-sm mt-1 text-orange-700">
+                Consider donating this food to someone in need. You'll make a difference and earn bonus points!
+              </p>
+              <Button 
+                variant="outline" 
+                className="w-full mt-2 border-orange-200 text-orange-700 hover:bg-orange-100"
+                onClick={() => alert("This feature will connect you with local donation centers")}
+              >
+                Find Donation Centers
+              </Button>
+            </div>
+          )}
 
           {showAnimation && (
             <div className="bg-eco-light/50 p-2 rounded-md mt-2 flex items-center justify-between">

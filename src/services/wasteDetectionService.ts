@@ -46,6 +46,37 @@ export const wasteCategories = {
     reusability: 75,
     pointsAwarded: 100,
     message: "Nice! Textiles can be repurposed or recycled."
+  },
+  // New food-related categories
+  'fruit': {
+    reusability: 95,
+    pointsAwarded: 130,
+    message: "This fresh fruit could be donated to people in need! You'll earn extra points for donating.",
+    donationSuggestion: true
+  },
+  'vegetable': {
+    reusability: 95,
+    pointsAwarded: 130,
+    message: "These vegetables could be donated to people in need! You'll earn extra points for donating.",
+    donationSuggestion: true
+  },
+  'bakery': {
+    reusability: 90,
+    pointsAwarded: 120,
+    message: "Bakery items can be donated to local shelters if still fresh! Consider donation for extra points.",
+    donationSuggestion: true
+  },
+  'prepared-food': {
+    reusability: 85,
+    pointsAwarded: 110,
+    message: "If this food is still fresh, consider donating it to those in need for extra points!",
+    donationSuggestion: true
+  },
+  'packaged-food': {
+    reusability: 90,
+    pointsAwarded: 120,
+    message: "Unopened packaged food can be donated to food banks! You'll get bonus points for donation.",
+    donationSuggestion: true
   }
 };
 
@@ -64,11 +95,10 @@ let classifier: any = null;
  */
 export const initWasteDetection = async () => {
   try {
-    // Using a general image classification model
-    // For production, you would want to use a model fine-tuned specifically for waste classification
+    // Using a more capable image classification model that's better at identifying food items
     classifier = await pipeline(
       'image-classification',
-      'Xenova/vit-base-patch16-224',
+      'Xenova/swin-tiny-patch4-window7-224',
       { device: 'webgpu', quantized: true }
     );
     return true;
@@ -82,8 +112,9 @@ export const initWasteDetection = async () => {
  * Map general classification results to waste categories
  */
 const mapToWasteCategory = (classificationResults: any[]) => {
-  // Map of keywords to waste categories
+  // Enhanced keyword map with more food categories
   const keywordMap: Record<string, string> = {
+    // Original categories
     'bottle': 'plastic',
     'plastic': 'plastic',
     'cup': 'plastic',
@@ -92,15 +123,12 @@ const mapToWasteCategory = (classificationResults: any[]) => {
     'document': 'paper',
     'newspaper': 'paper',
     'glass': 'glass',
-    'bottle': 'glass',
     'jar': 'glass',
     'can': 'metal',
     'metal': 'metal',
     'aluminum': 'metal',
     'cardboard': 'cardboard',
     'box': 'cardboard',
-    'fruit': 'organic',
-    'vegetable': 'organic',
     'food': 'organic',
     'computer': 'electronic',
     'phone': 'electronic',
@@ -108,16 +136,75 @@ const mapToWasteCategory = (classificationResults: any[]) => {
     'device': 'electronic',
     'clothing': 'textile',
     'fabric': 'textile',
-    'cloth': 'textile'
+    'cloth': 'textile',
+    
+    // Enhanced food detection
+    'fruit': 'fruit',
+    'apple': 'fruit',
+    'banana': 'fruit',
+    'orange': 'fruit',
+    'grape': 'fruit',
+    'strawberry': 'fruit',
+    'blueberry': 'fruit',
+    'peach': 'fruit',
+    'pear': 'fruit',
+    'mango': 'fruit',
+    'pineapple': 'fruit',
+    'watermelon': 'fruit',
+    'melon': 'fruit',
+    
+    'vegetable': 'vegetable',
+    'carrot': 'vegetable',
+    'broccoli': 'vegetable',
+    'lettuce': 'vegetable',
+    'tomato': 'vegetable',
+    'potato': 'vegetable',
+    'cucumber': 'vegetable',
+    'onion': 'vegetable',
+    'pepper': 'vegetable',
+    'cauliflower': 'vegetable',
+    'cabbage': 'vegetable',
+    
+    'bread': 'bakery',
+    'cake': 'bakery',
+    'bakery': 'bakery',
+    'pastry': 'bakery',
+    'donut': 'bakery',
+    'croissant': 'bakery',
+    'muffin': 'bakery',
+    'cookie': 'bakery',
+    'pie': 'bakery',
+    
+    'meal': 'prepared-food',
+    'dinner': 'prepared-food',
+    'lunch': 'prepared-food',
+    'leftover': 'prepared-food',
+    'cooked': 'prepared-food',
+    'plate': 'prepared-food',
+    'soup': 'prepared-food',
+    'rice': 'prepared-food',
+    'pasta': 'prepared-food',
+    'sandwich': 'prepared-food',
+    'pizza': 'prepared-food',
+    
+    'canned': 'packaged-food',
+    'packaged': 'packaged-food',
+    'box': 'packaged-food',
+    'snack': 'packaged-food',
+    'cereal': 'packaged-food',
+    'milk': 'packaged-food',
+    'juice': 'packaged-food'
   };
 
-  // Check top 3 results for keywords
-  for (const result of classificationResults.slice(0, 3)) {
+  // Check top 5 results for keywords (increased from top 3)
+  for (const result of classificationResults.slice(0, 5)) {
     const label = result.label.toLowerCase();
+    console.log("Checking label:", label);
     
     // Check if any keywords match
     for (const [keyword, category] of Object.entries(keywordMap)) {
       if (label.includes(keyword)) {
+        console.log(`Matched keyword "${keyword}" to category "${category}"`);
         return category;
       }
     }
