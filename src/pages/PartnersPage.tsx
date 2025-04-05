@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Search, Filter, Store } from "lucide-react";
 import Layout from "@/components/layout/Layout";
@@ -23,7 +24,7 @@ const PartnersPage = () => {
   const { toast } = useToast();
 
   // Categories
-  const categories = ["Cafés", "Restaurants", "Fast Food"];
+  const categories = ["Cafés", "Restaurants", "Fast Food", "Electronics", "Entertainment"];
   
   // Custom partner shops
   const partners = [
@@ -53,6 +54,15 @@ const PartnersPage = () => {
       pointsRequired: 500,
       location: "Wagholi, Pune",
       category: "Fast Food"
+    },
+    {
+      id: 4,
+      name: "Hotel Ranwara",
+      image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+      discount: "50% Off",
+      pointsRequired: 800,
+      location: "Wagholi, Pune",
+      category: "Restaurants"
     }
   ];
 
