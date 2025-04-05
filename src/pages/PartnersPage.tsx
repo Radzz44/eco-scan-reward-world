@@ -41,7 +41,7 @@ const PartnersPage = () => {
       id: 2,
       name: "Crush Café",
       image: "https://images.unsplash.com/photo-1550547660-d9450f859349?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-      discount: "1+1 Burger Offer",
+      discount: "1+1 Pizza Offer",
       pointsRequired: 750,
       location: "Near G H Raisoni College, Wagholi, Pune",
       category: "Cafés"
