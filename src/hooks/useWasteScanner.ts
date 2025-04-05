@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useToast } from "@/components/ui/use-toast";
 import { initWasteDetection, detectWaste } from "@/services/wasteDetectionService";
@@ -8,6 +7,7 @@ interface ScanResult {
   reusability: number;
   pointsAwarded: number;
   message: string;
+  donationSuggestion?: boolean;
 }
 
 export const useWasteScanner = () => {
@@ -17,13 +17,11 @@ export const useWasteScanner = () => {
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
   const [progress, setProgress] = useState(0);
   const [totalPoints, setTotalPoints] = useState(() => {
-    // Initialize from localStorage if available
     const saved = localStorage.getItem('eco-total-points');
     return saved ? parseInt(saved, 10) : 0;
   });
   const { toast } = useToast();
 
-  // Save points to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('eco-total-points', totalPoints.toString());
   }, [totalPoints]);
@@ -48,7 +46,6 @@ export const useWasteScanner = () => {
   }, [toast]);
 
   const handleFileSelect = (file: File) => {
-    // Check file type
     if (!file.type.startsWith("image/")) {
       toast({
         title: "Invalid file",
@@ -72,7 +69,6 @@ export const useWasteScanner = () => {
     setIsScanning(true);
     setProgress(0);
     
-    // Simulate initial progress
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 70) {
@@ -84,17 +80,13 @@ export const useWasteScanner = () => {
     }, 100);
     
     try {
-      // Perform real waste detection
       const result = await detectWaste(uploadedImage);
       
-      // Complete the progress
       setProgress(100);
       setScanResult(result);
       
-      // Update total points
       setTotalPoints(prevPoints => prevPoints + result.pointsAwarded);
       
-      // Show toast notification
       toast({
         title: "Scan Complete!",
         description: `You've earned ${result.pointsAwarded} points!`,

@@ -99,7 +99,7 @@ export const initWasteDetection = async () => {
     classifier = await pipeline(
       'image-classification',
       'Xenova/swin-tiny-patch4-window7-224',
-      { device: 'webgpu', quantized: true }
+      { device: 'webgpu' }
     );
     return true;
   } catch (error) {
@@ -189,11 +189,10 @@ const mapToWasteCategory = (classificationResults: any[]) => {
     
     'canned': 'packaged-food',
     'packaged': 'packaged-food',
-    'box': 'packaged-food',
-    'snack': 'packaged-food',
     'cereal': 'packaged-food',
     'milk': 'packaged-food',
-    'juice': 'packaged-food'
+    'juice': 'packaged-food',
+    'snack': 'packaged-food'
   };
 
   // Check top 5 results for keywords (increased from top 3)

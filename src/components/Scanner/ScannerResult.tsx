@@ -37,6 +37,13 @@ const ScannerResult = ({ result, onNewScan }: ScannerResultProps) => {
     }
   }, [animatedPoints, result.pointsAwarded]);
 
+  // Set color based on reusability score
+  const getProgressColor = () => {
+    if (result.reusability > 70) return "bg-eco-primary";
+    if (result.reusability > 40) return "bg-amber-500";
+    return "bg-red-500";
+  };
+
   return (
     <div className="w-full space-y-4 animate-fade-in">
       <div className="bg-muted p-4 rounded-lg">
@@ -60,9 +67,7 @@ const ScannerResult = ({ result, onNewScan }: ScannerResultProps) => {
             </div>
             <Progress 
               value={result.reusability} 
-              className="h-2"
-              indicator={result.reusability > 70 ? "bg-eco-primary" : 
-                        result.reusability > 40 ? "bg-amber-500" : "bg-red-500"}
+              className={`h-2 ${getProgressColor()}`}
             />
           </div>
           
